@@ -1,5 +1,5 @@
 
-# 🏀 NBA/WNBA Interview Classification — NLP Project
+# 🏀 NBA Interview Classification — NLP Project
 
 This project builds a **multi-label text classification pipeline** that analyzes post-game and draft-event interviews from NBA and WNBA players and coaches.
 Each interview quote is classified along two binary axes:
