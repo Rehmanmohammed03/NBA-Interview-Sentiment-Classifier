@@ -1,68 +1,107 @@
-NBA/WNBA INTERVIEW CLASSIFICATION - NLP PROJECT
 
-This project performs multi-label classification of player and coach interview quotes from NBA and WNBA post-game and draft events. 
-Each quote is classified on two binary axes:
+# 🏀 NBA/WNBA Interview Classification — NLP Project
 
-1. Sentiment: Positive or Negative
-2. Focus: Team or Individual
+This project builds a **multi-label text classification pipeline** that analyzes post-game and draft-event interviews from NBA and WNBA players and coaches.
+Each interview quote is classified along two binary axes:
 
-Quotes are sourced from asapsports.com and provided in a structured CSV format with labeled training data and unlabeled test data.
+* **Sentiment:** Positive 🟢 or Negative 🔴
+* **Focus:** Team-oriented 🤝 or Individual-focused 👤
 
---------------------------------------------------------------------------------
-FILE DESCRIPTIONS AND HOW TO RUN EACH MODEL
+The dataset is sourced from [asapsports.com](https://asapsports.com), structured in CSV format with labeled training data and unlabeled test data.
 
-1. baseline_model.py
-- Predicts "Positive" and "Team" for every quote (hardcoded baseline)
-- Run using:
-    python baseline_model.py
-- Output: submission.csv file in sample_outputs/ with accuracy printed in console
+---
 
-2. Lr_model.py
-- Trains logistic regression models using TF-IDF features (one for Sentiment, one for Focus)
-- Run using:
-    python Lr_model.py
-- Output: submission.csv file in sample_outputs/ with accuracy printed in console
+## 📊 Project Overview
 
-3. zer-shot-model.py
-- Uses zero-shot classification with facebook/bart-large-mnli (no training)
-- Classifies based on prompted labels using Hugging Face pipeline
-- Run using:
-    python zer-shot-model.py
-- Output: submission.csv file in sample_outputs/ with accuracy printed in console
+This repository contains multiple modeling approaches — from baselines to transformer-based models — to compare performance and evaluate trade-offs between simplicity and accuracy.
 
-4. distilBERT_finetuned_model.py
-- Fine-tunes DistilBERT for both Sentiment and Focus classification using Hugging Face Trainer API
-- Trains on 100 rows and validates on 20 rows
-- Run using:
-    python distilBERT_finetuned_model.py
-- Output: 
-    - submission.csv file in sample_outputs/
-    - Accuracy for Sentiment and Focus printed in console
+| Model                           | Technique                    | Description                                                                              |
+| ------------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------- |
+| `baseline_model.py`             | Hardcoded baseline           | Always predicts “Positive” and “Team” for benchmarking.                                  |
+| `lr_model.py`                   | Logistic Regression (TF-IDF) | Trains two independent models (Sentiment, Focus) using scikit-learn.                     |
+| `zero_shot_model.py`            | Zero-Shot Classification     | Uses `facebook/bart-large-mnli` to classify without training via Hugging Face pipelines. |
+| `distilBERT_finetuned_model.py` | Transformer Fine-Tuning      | Fine-tunes **DistilBERT** on custom labels using the Hugging Face Trainer API.           |
 
---------------------------------------------------------------------------------
-REQUIREMENTS
+---
 
-Install the following Python libraries using pip:
+## ⚙️ How to Run
 
-- pandas
-- numpy
-- scikit-learn
-- torch
-- transformers
-- datasets
+Clone the repo and navigate to the project directory:
 
-Command to install all:
+```bash
+git clone https://github.com/Rehmanmohammed03/NBA-Interview-Sentiment-Classifier.git
+cd NBA-Interview-Sentiment-Classifier
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+*(or manually install the listed libraries below)*
+
+Run a specific model:
+
+```bash
+# Baseline
+python baseline_model.py
+
+# Logistic Regression
+python lr_model.py
+
+# Zero-Shot BART
+python zero_shot_model.py
+
+# Fine-tuned DistilBERT
+python distilBERT_finetuned_model.py
+```
+
+Each script outputs:
+
+* `submission.csv` → stored in the `sample_outputs/` folder
+* Accuracy metrics printed to the console
+
+---
+
+## 🧰 Requirements
+
+```
+pandas  
+numpy  
+scikit-learn  
+torch  
+transformers  
+datasets
+```
+
+Install all at once:
+
+```bash
 pip install pandas numpy scikit-learn torch transformers datasets
+```
 
---------------------------------------------------------------------------------
-SUBMISSION FORMAT
+---
 
-All models output predictions in the following CSV format:
+## 📁 Submission Format
 
-Positive,Negative,Team,Individual
-1,0,1,0
-0,1,0,1
-1,0,0,1
-...
+All models produce predictions in a CSV with the following columns:
+
+| Positive | Negative | Team | Individual |
+| -------- | -------- | ---- | ---------- |
+| 1        | 0        | 1    | 0          |
+| 0        | 1        | 0    | 1          |
+| 1        | 0        | 0    | 1          |
+
+Each row corresponds to one interview quote.
+
+---
+
+## 📈 Future Improvements
+
+* Integrate **Airflow or Prefect** to automate training/evaluation pipelines
+* Expand dataset with more sports domains for cross-league generalization
+* Log results to a central database for model comparison and dashboarding
 
 
+Would you like me to create a small **`requirements.txt`** file next (so you can just push it with your code)? It’ll make the `pip install -r requirements.txt` step work immediately.
