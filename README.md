@@ -101,6 +101,3 @@ Each row corresponds to one interview quote.
 * Integrate **Airflow or Prefect** to automate training/evaluation pipelines
 * Expand dataset with more sports domains for cross-league generalization
 * Log results to a central database for model comparison and dashboarding
-
-
-Would you like me to create a small **`requirements.txt`** file next (so you can just push it with your code)? It’ll make the `pip install -r requirements.txt` step work immediately.
